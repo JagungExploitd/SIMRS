@@ -2,4 +2,5 @@
 
 ## Docker
 Menggunakan docker untuk menjalankan program.
+### Run
 docker compose up
