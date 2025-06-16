@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: sim_rs
+      DB_USER: root
+      DB_PASS: rootpassword
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/html
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sim_rs
+      # Removed MYSQL_USER and MYSQL_PASSWORD for root user as per MySQL image requirements
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./sim_rs.sql:/docker-entrypoint-initdb.d/sim_rs.sql
+
+volumes:
+  db_data:
